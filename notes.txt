@@ -1,0 +1,53 @@
+Target URL's:
+    https://bitbucket.innogames.de/projects/conv/repos/onelps-fe/commits/56fce2f0a042e14e819cc19842d7cf667f7bcc6d
+    https://bitbucket.innogames.de/projects/COREBE/repos/core-backend-account/commits/c25a9efde5ccdb79a2bd130c8b9d16e4738b9691
+    https://github.com/Sokkernr1/vscode-gitblame/commit/8588c60b55de9286cc2498390f250c7677b63691
+
+Possible way:
+    {2.replace(/.*(?=@)./g, "https://")} + 
+    {2.replace(/(?<=git.+):/g, "/")} + 
+    {2.replace(/(?<=innogames.de|innogames.com)\//g, "/projects/")}} +
+    {2.replace(/(?<=bitbucket.+)\/((?!.+\/))/g, "/repos/")}} +
+    {2.replace(/\.git/g, "")}} +
+    if(/bitbucket/g = exists) 
+        "/commits/" 
+    else
+        "/commit/" +
+    {3.commitHash}
+
+{1}Get current branch: 
+    git symbolic-ref -q HEAD --short
+        feature/CONV-9604-forge-ingame-speechbubble
+    
+{2}Get repository URL:
+    git ls-remote --get-url
+        ssh://git@bitbucket.innogames.de/conv/onelps-fe.git
+        https://bitbucket.innogames.de/scm/corebe/core-backend-push-notification.git
+        git@github.com:Sokkernr1/vscode-gitblame.git
+
+{3}Get last commit on line x: 
+     git blame -L 10 jest.config.js -l -t -p
+        bca170dfe09577a3d9ce5e2eb530f6119884ca7d 10 10 1
+        author Andrea Svaglic
+        author-mail <andrea.svaglic@innogames.com>
+        author-time 1617020481
+        author-tz +0200
+        committer Andrea Svaglic
+        committer-mail <andrea.svaglic@innogames.com>
+        committer-time 1617020481
+        committer-tz +0200
+        summary CONV-8996: autofix lint errors
+        previous 2e5996037d26279e8f3b11f765f53e248acb9c55 jest.config.js
+        filename jest.config.js
+                        // automock: false,
+        6ea2b175f2303940294eba6468206b28e6c6d2cd 9 11 1
+        author Andrea Svaglic
+        author-mail <andrea.svaglic@innogames.com>
+        author-time 1617007562
+        author-tz +0200
+        committer Andrea Svaglic
+        committer-mail <andrea.svaglic@innogames.com>
+        committer-time 1617007562
+        committer-tz +0200
+        summary CONV-8995: add test setup and basic example
+        filename jest.config.js
