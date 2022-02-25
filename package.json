@@ -10,17 +10,9 @@
 		"Other"
 	],
 	"activationEvents": [
-        "onCommand:innovs-gitinfo.helloWorld"
+        "*"
 	],
 	"main": "./dist/extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "innovs-gitinfo.helloWorld",
-				"title": "Hello World"
-			}
-		]
-	},
 	"scripts": {
 		"vscode:prepublish": "npm run package",
 		"compile": "webpack",
