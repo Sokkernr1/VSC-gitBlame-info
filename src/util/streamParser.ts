@@ -9,10 +9,15 @@ export function getInfoObject( infoString: string) : object {
 		summary: String
 	};
 
+	let data = infoString.split('\n');
+
+	extractHash(data);
+
 	return infoObject;
 }
 
-function extractHash(infoString: string) : string {
+function extractHash(infoString: string[]) : string {
+	console.log(infoString[0]);
 
 	for (let i = 0; i < infoString.length; i++) {
 		if (/author/i.test(infoString[i])) {
