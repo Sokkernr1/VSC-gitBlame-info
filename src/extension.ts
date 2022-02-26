@@ -1,20 +1,19 @@
-import { stringify } from 'querystring';
 import * as vscode from 'vscode';
-import { resourceLimits } from 'worker_threads';
-import * as cp from 'child_process';
+import { cmd } from './util/cmdHandler';
+import { getInfoObject } from './util/streamParser';
 
 let gitStatusBarItem: vscode.StatusBarItem;
 
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
 	
 	console.log('innoVS-gitInfo is now active');
 
 
-	getGitInfo();
+	await getGitInfo();
 
 	const getInfoCommand = 'sample.showSelectionCount';
-	context.subscriptions.push(vscode.commands.registerCommand(getInfoCommand, () => {
-		vscode.window.showInformationMessage(`Line: ${getCurrentLine()}`);
+	context.subscriptions.push(vscode.commands.registerCommand(getInfoCommand, async () => {
+		await vscode.window.showInformationMessage(`Line: ${getCurrentLine()}`);
 	}));
 
 	gitStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
@@ -27,9 +26,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 	gitStatusBarItem.show();
 
-    if (vscode.window.activeTextEditor) {
-        vscode.window.activeTextEditor.selection.active.line;
-    }
+	if (vscode.window.activeTextEditor) {
+		vscode.window.activeTextEditor.selection.active.line;
+	}
 }
 
 function getCurrentLine(): number {
@@ -45,35 +44,19 @@ function getCurrentLine(): number {
 	return result;
 }
 
-async function getGitInfo(): Promise<void> {
+async function getGitInfo() {
 
-	let result = await execShell('git blame -L 10 extension.ts -l -t -p', {cwd: '/Volumes/privateWorkspace/innoGames/projects/innoVS-gitInfo/src'});
+	let result = await cmd('git blame -L 10 extension.ts -l -t -p', {cwd: '/Volumes/privateWorkspace/innoGames/projects/innoVS-gitInfo/src'});
 
-	let resultData = result.split('\n');
-	for (var i = 0; i < resultData.length; i++) {
-		if (/author/i.test(resultData[i])) {
-			let text = resultData[i].replace(/author /i, 'From: ');
-			console.log(text);
-		  break;
-		}
-	}
+	let newObject = getInfoObject(result);
+
+	console.log(newObject);
 }
-
-const execShell = (
-	command: string,
-	options: cp.ExecOptions = {} ) =>
-    new Promise<string>((resolve, reject) => {
-        cp.exec(command, {...options, encoding: "utf8"}, (err, out) => {
-            if (err) {
-                return reject(err);
-            }
-            return resolve(out);
-        });
-    });
 
 function updateStatusBarItem(): void {
 	gitStatusBarItem.show();
 }
 
 // this method is called when your extension is deactivated
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 export function deactivate() {}
