@@ -7,7 +7,7 @@ let gitStatusBarItem: vscode.StatusBarItem;
 
 export function activate(context: vscode.ExtensionContext) {
 	
-	console.log('innoVS-gitInfo is now activee');
+	console.log('innoVS-gitInfo is now active');
 
 
 	getGitInfo();
@@ -49,30 +49,14 @@ async function getGitInfo(): Promise<void> {
 
 	let result = await execShell('git blame -L 10 extension.ts -l -t -p', {cwd: '/Volumes/privateWorkspace/innoGames/projects/innoVS-gitInfo/src'});
 
-	console.log(result);
-
-	// let execution: ChildProcess;
-
-	// let command = "git";
-	// let args = ["ls-remote", "--get-url"];
-	// let options: ExecOptions = {};
-
-    // try {
-    //     execution = execFile(command, args, { ...options, encoding: "utf8" });
-	// 	console.log(execution);
-    // } catch (err) {
-    //     console.log(err);
-	// 	return;
-    // }
-
-	// let data = '';
-
-	// for await (const chunk of execution?.stdout ?? []) {
-    //     data += chunk;
-	// 	console.log('hello');
-    // }
-
-	// console.log(data);
+	let resultData = result.split('\n');
+	for (var i = 0; i < resultData.length; i++) {
+		if (/author/i.test(resultData[i])) {
+			let text = resultData[i].replace(/author /i, 'From: ');
+			console.log(text);
+		  break;
+		}
+	}
 }
 
 const execShell = (
