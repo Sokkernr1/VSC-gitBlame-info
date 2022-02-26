@@ -35,7 +35,8 @@
 		"no-useless-return": "warn",
 		"no-var": "warn",
 		"one-var": ["warn", "never"],
-		"prefer-arrow-callback": "warn"
+		"prefer-arrow-callback": "warn",
+		"prefer-const": "warn"
     },
     "ignorePatterns": [
         "out",
