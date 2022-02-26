@@ -1,0 +1,45 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "env": {
+        "es6": true,
+        "node": true,
+        "mocha": true
+    },
+    "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "eslint:recommended"
+    ],
+    "rules": {
+        "array-bracket-spacing": 1,
+		"comma-spacing": [1, { "before": false, "after": true }],
+		"comma-style": [1, "last"],
+		"indent": [1, "tab"],
+		"jsx-quotes": [1, "prefer-single"],
+		"semi": [1, "always"],
+		"no-unused-vars": "off",
+		"react/prop-types": ["off"],
+		"react/display-name": ["off"],
+		"react/no-unescaped-entities": ["off"],
+		"no-else-return": "warn",
+		"no-unneeded-ternary": "warn",
+		"no-useless-return": "warn",
+		"no-var": "warn",
+		"one-var": ["warn", "never"],
+		"prefer-arrow-callback": "warn"
+    },
+    "ignorePatterns": [
+        "out",
+        "dist",
+        "**/*.d.ts"
+    ]
+}
