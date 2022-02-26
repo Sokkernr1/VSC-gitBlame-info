@@ -6,7 +6,9 @@ import * as cp from 'child_process';
 let gitStatusBarItem: vscode.StatusBarItem;
 
 export function activate(context: vscode.ExtensionContext) {
-	console.log('innoVS-gitInfo is now active');
+	
+	console.log('innoVS-gitInfo is now activee');
+
 
 	getGitInfo();
 
@@ -45,7 +47,7 @@ function getCurrentLine(): number {
 
 async function getGitInfo(): Promise<void> {
 
-	let result = await execShell('pwd', {cwd: '/Volumes/workspace'});
+	let result = await execShell('git blame -L 10 extension.ts -l -t -p', {cwd: '/Volumes/privateWorkspace/innoGames/projects/innoVS-gitInfo/src'});
 
 	console.log(result);
 
@@ -74,10 +76,10 @@ async function getGitInfo(): Promise<void> {
 }
 
 const execShell = (
-	cmd: string,
+	command: string,
 	options: cp.ExecOptions = {} ) =>
     new Promise<string>((resolve, reject) => {
-        cp.exec(cmd, {...options, encoding: "utf8"}, (err, out) => {
+        cp.exec(command, {...options, encoding: "utf8"}, (err, out) => {
             if (err) {
                 return reject(err);
             }
