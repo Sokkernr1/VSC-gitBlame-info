@@ -46,7 +46,7 @@ function getCurrentLine(): number {
 
 async function getGitInfo() {
 
-	let result = await cmd('git blame -L 10 extension.ts -l -t -p', {cwd: '/Volumes/privateWorkspace/innoGames/projects/innoVS-gitInfo/src'});
+	let result = await cmd('git blame -L 10,10 extension.ts --incremental', {cwd: '/Volumes/privateWorkspace/innoGames/projects/innoVS-gitInfo/src'});
 
 	let newObject = getInfoObject(result);
 

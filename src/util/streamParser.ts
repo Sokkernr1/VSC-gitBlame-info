@@ -1,30 +1,45 @@
+export type gitInfoTemplate = {
+	hash: string,
+	author: string,
+	committer: string,
+	mail: string,
+	timestamp: string,
+	tz: string,
+	date: Date,
+	summary: string,
+	timeAgo: string
+}
+
+const gitInfoBlank = (): gitInfoTemplate => ({
+	hash: '',
+	author: '',
+	committer: '',
+	mail: '',
+	timestamp: '',
+	tz: '',
+	date: new Date,
+	summary: '',
+	timeAgo: ''
+});
+
 export function getInfoObject( infoString: string) : object {
-	let infoObject = {
-		hash: String,
-		author: String,
-		committer: String,
-		mail: String,
-		timestamp: String,
-		date: Date,
-		summary: String
-	};
-
-	let data = infoString.split('\n');
-
-	extractHash(data);
+	const data = infoString.split('\n');
+	const infoObject = extractInfo(data);
 
 	return infoObject;
 }
 
-function extractHash(infoString: string[]) : string {
-	console.log(infoString[0]);
+function extractInfo(infoString: string[]): gitInfoTemplate {
+	const dataObject = gitInfoBlank();
 
-	for (let i = 0; i < infoString.length; i++) {
-		if (/author/i.test(infoString[i])) {
-			let text = infoString[i].replace(/author /i, 'From: ');
-			console.log(text);
-			break;
-		}
-	}
-	return '';
+	dataObject.hash = infoString[0].replace(/.(?<=\s).*/i, '');
+	dataObject.author = infoString[1].replace(/author./i, '');
+	dataObject.committer = infoString[5].replace(/committer./i, '');
+	dataObject.mail = infoString[6].replace(/committer-mail./i, '');
+	dataObject.timestamp = infoString[7].replace(/committer-time./i, '');
+	dataObject.tz = infoString[8].replace(/committer-tz./i, '');
+	dataObject.summary = infoString[9].replace(/summary./i, '');
+	
+	dataObject.date = new Date(Number(dataObject.timestamp) * 1000);
+	return dataObject;
 }
