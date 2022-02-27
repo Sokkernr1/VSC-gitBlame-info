@@ -1,3 +1,5 @@
+import { between } from "./ago";
+
 export type gitInfoTemplate = {
 	hash: string,
 	author: string,
@@ -39,7 +41,8 @@ function extractInfo(infoString: string[]): gitInfoTemplate {
 	dataObject.timestamp = infoString[7].replace(/committer-time./i, '');
 	dataObject.tz = infoString[8].replace(/committer-tz./i, '');
 	dataObject.summary = infoString[9].replace(/summary./i, '');
-	
 	dataObject.date = new Date(Number(dataObject.timestamp) * 1000);
+	dataObject.timeAgo = between(new Date(Date.now()), new Date(Number(dataObject.timestamp) * 1000));
+	
 	return dataObject;
 }
