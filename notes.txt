@@ -4,16 +4,20 @@ Target URL's:
     https://github.com/Sokkernr1/vscode-gitblame/commit/8588c60b55de9286cc2498390f250c7677b63691
 
 Possible way:
-    {2.replace(/.*(?=@)./g, "https://")} + 
-    {2.replace(/(?<=git.+):/g, "/")} + 
-    {2.replace(/(?<=innogames.de|innogames.com)\//g, "/projects/")}} +
-    {2.replace(/(?<=bitbucket.+)\/((?!.+\/))/g, "/repos/")}} +
-    {2.replace(/\.git/g, "")}} +
-    if(/bitbucket/g = exists) 
+    {2.replace(/.*(?=@)./i, "https://")} + 
+    {2.replace(/(?<=git.+):/i, "/")} + 
+    {2.replace(/(?<=innogames.de|innogames.com)\//i, "/projects/")}} +
+    {2.replace(/(?<=bitbucket.+)\/((?!.+\/))/i, "/repos/")}} +
+    {2.replace(/\.git/i, "")}} +
+    if(/bitbucket/i = exists) 
         "/commits/" 
     else
         "/commit/" +
     {3.commitHash}
+
+Clean Hash line:
+	Hash line: bd1d5b0c23f07833381c69e9815e74a1908ae37a 11 10 1
+	regex: /.(?<=\s).*/i
 
 {1}Get current branch: 
     git symbolic-ref -q HEAD --short
@@ -26,7 +30,7 @@ Possible way:
         git@github.com:Sokkernr1/vscode-gitblame.git
 
 {3}Get last commit on line x: 
-     git blame -L 10 jest.config.js -l -t -p
+     git blame -L 10,10 extension.ts --incremental
         bca170dfe09577a3d9ce5e2eb530f6119884ca7d 10 10 1
         author Andrea Svaglic
         author-mail <andrea.svaglic@innogames.com>
