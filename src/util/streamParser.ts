@@ -1,6 +1,6 @@
 import { between } from "./ago";
 
-export type gitInfoTemplate = {
+export type gitBlameTemplate = {
 	hash: string,
 	author: string,
 	committer: string,
@@ -12,7 +12,7 @@ export type gitInfoTemplate = {
 	timeAgo: string
 }
 
-const gitInfoBlank = (): gitInfoTemplate => ({
+const gitBlameBlank = (): gitBlameTemplate => ({
 	hash: '',
 	author: '',
 	committer: '',
@@ -24,15 +24,16 @@ const gitInfoBlank = (): gitInfoTemplate => ({
 	timeAgo: ''
 });
 
-export function getInfoObject( infoString: string) : object {
+export function getBlameObject( infoString: string) : gitBlameTemplate {
 	const data = infoString.split('\n');
-	const infoObject = extractInfo(data);
+
+	const infoObject = extractBlameInfo(data);
 
 	return infoObject;
 }
 
-function extractInfo(infoString: string[]): gitInfoTemplate {
-	const dataObject = gitInfoBlank();
+function extractBlameInfo(infoString: string[]): gitBlameTemplate {
+	const dataObject = gitBlameBlank();
 
 	dataObject.hash = infoString[0].replace(/.(?<=\s).*/i, '');
 	dataObject.author = infoString[1].replace(/author./i, '');

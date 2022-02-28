@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { cmd } from './util/cmdHandler';
-import { getInfoObject } from './util/streamParser';
+import { getBlameObject } from './util/streamParser';
+import * as gitCommands from './util/gitCommands';
 
 let gitStatusBarItem: vscode.StatusBarItem;
 
@@ -46,11 +47,13 @@ function getCurrentLine(): number {
 
 async function getGitInfo() {
 
-	let result = await cmd('git blame -L 10,10 extension.ts --incremental', {cwd: '/Volumes/privateWorkspace/innoGames/projects/innoVS-gitInfo/src'});
+	const gitBlameInfo = await gitCommands.getBlame('/Volumes/privateWorkspace/innoGames/projects/innoVS-gitInfo/src', 'extension.ts', 10);
+	const gitBranchInfo = await gitCommands.getBranch('/Volumes/privateWorkspace/innoGames/projects/innoVS-gitInfo/src');
+	const gitURLInfo = await gitCommands.getURL('/Volumes/privateWorkspace/innoGames/projects/innoVS-gitInfo/src');
 
-	let newObject = getInfoObject(result);
-
-	console.log(newObject);
+	console.log(gitBlameInfo);
+	console.log(gitBranchInfo);
+	console.log(gitURLInfo);
 }
 
 function updateStatusBarItem(): void {

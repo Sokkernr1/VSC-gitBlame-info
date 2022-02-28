@@ -30,28 +30,16 @@ Clean Hash line:
         git@github.com:Sokkernr1/vscode-gitblame.git
 
 {3}Get last commit on line x: 
-     git blame -L 10,10 extension.ts --incremental
-        bca170dfe09577a3d9ce5e2eb530f6119884ca7d 10 10 1
-        author Andrea Svaglic
-        author-mail <andrea.svaglic@innogames.com>
-        author-time 1617020481
-        author-tz +0200
-        committer Andrea Svaglic
-        committer-mail <andrea.svaglic@innogames.com>
-        committer-time 1617020481
-        committer-tz +0200
-        summary CONV-8996: autofix lint errors
-        previous 2e5996037d26279e8f3b11f765f53e248acb9c55 jest.config.js
-        filename jest.config.js
-                        // automock: false,
-        6ea2b175f2303940294eba6468206b28e6c6d2cd 9 11 1
-        author Andrea Svaglic
-        author-mail <andrea.svaglic@innogames.com>
-        author-time 1617007562
-        author-tz +0200
-        committer Andrea Svaglic
-        committer-mail <andrea.svaglic@innogames.com>
-        committer-time 1617007562
-        committer-tz +0200
-        summary CONV-8995: add test setup and basic example
-        filename jest.config.js
+    git blame -L 10,10 extension.ts --incremental
+        2ae0ce56619f48e1ab1a8539c705766253e68c2d 10 10 1
+		author Paul Sohns
+		author-mail <paul.sohns@innogames.com>
+		author-time 1645840243
+		author-tz +0100
+		committer Paul Sohns
+		committer-mail <paul.sohns@innogames.com>
+		committer-time 1645840243
+		committer-tz +0100
+		summary First extract from output
+		previous bd1d5b0c23f07833381c69e9815e74a1908ae37a src/extension.ts
+		filename src/extension.ts
