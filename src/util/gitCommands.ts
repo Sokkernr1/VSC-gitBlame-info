@@ -3,10 +3,7 @@ import { cmd } from './cmdHandler';
 
 export async function getBlame(path: string, fileName: string, line: number): Promise<gitBlameTemplate> {
 	const cmdResult = await cmd(`git blame -L ${line},${line} ${fileName} --incremental`, {cwd: path});
-
-	const objectResult = getBlameObject(cmdResult);
-
-	return objectResult;
+	return getBlameObject(cmdResult);
 
 }
 

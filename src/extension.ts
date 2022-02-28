@@ -1,6 +1,4 @@
 import * as vscode from 'vscode';
-import { cmd } from './util/cmdHandler';
-import { getBlameObject } from './util/streamParser';
 import * as gitCommands from './util/gitCommands';
 
 let gitStatusBarItem: vscode.StatusBarItem;
@@ -59,7 +57,3 @@ async function getGitInfo() {
 function updateStatusBarItem(): void {
 	gitStatusBarItem.show();
 }
-
-// this method is called when your extension is deactivated
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-export function deactivate() {}
