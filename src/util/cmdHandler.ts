@@ -7,9 +7,9 @@ export const cmd = (
 	new Promise<string>((resolve, reject) => {
 		cp.exec(command, {...options, encoding: "utf8"}, (err, out) => {
 			if (err) {
+				console.log(err);
 				return reject(err);
 			}
 			return resolve(out);
 		});
-	}
-	);
+	});

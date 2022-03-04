@@ -19,8 +19,13 @@ Clean Hash line:
 	Hash line: bd1d5b0c23f07833381c69e9815e74a1908ae37a 11 10 1
 	regex: /.(?<=\s).*/i
 
+Check if file is ignored:
+	git check-ignore <filename> &>/dev/null; echo $?
+		if output != empty then file is tracked
+
 Check if path is part of a git repository:
-	git status 2>/dev/null; echo $?
+	git -C . rev-parse 2>/dev/null; echo $?
+		if output != 0 then its no repository
 
 {1}Get current branch: 
     git symbolic-ref -q HEAD --short

@@ -16,3 +16,13 @@ export async function getURL(path: string): Promise<string>{
 	const result = await cmd('git ls-remote --get-url', {cwd: path});
 	return result.replace(/\s/gi, '');
 }
+
+export async function isGitRepo(path: string): Promise<boolean>{
+	const result = await cmd('git -C . rev-parse 2>/dev/null; echo $?', {cwd: path});
+	return Number(result) === 0;
+}
+
+export async function isFileTracked(path: string, fileName: string): Promise<boolean>{
+	const result = await cmd(`git check-ignore ${fileName} &>/dev/null; echo $?`, {cwd: path});
+	return Number(result) === 1;
+}
