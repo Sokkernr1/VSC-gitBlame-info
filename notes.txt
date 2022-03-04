@@ -19,6 +19,9 @@ Clean Hash line:
 	Hash line: bd1d5b0c23f07833381c69e9815e74a1908ae37a 11 10 1
 	regex: /.(?<=\s).*/i
 
+Check if path is part of a git repository:
+	git status 2>/dev/null; echo $?
+
 {1}Get current branch: 
     git symbolic-ref -q HEAD --short
         feature/CONV-9604-forge-ingame-speechbubble
