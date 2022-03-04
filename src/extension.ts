@@ -5,14 +5,42 @@ import * as urlParser from './util/parseURL';
 import { Logger } from './util/logger';
 
 let gitStatusBarItem: vscode.StatusBarItem;
+let hash: string;
+let author: string;
+let committer: string;
+let mail: string;
+let timestamp: string;
+let tz: string;
+let date: Date;
+let summary: string;
+let timeAgo: string;
+
+const infoMessage = <T extends vscode.MessageItem>(
+	message: string,
+	item: undefined | T[] = [],
+): Promise<T | undefined> => {
+	return Promise.resolve(vscode.window.showInformationMessage(message, ...item));
+};
+
+type ActionItem = vscode.MessageItem & {
+    action: () => void;
+}
 
 export async function activate(context: vscode.ExtensionContext) {
 	
 	Logger.write('info', 'innoVS-gitInfo is now active');
 
+	const actionItem: ActionItem[] = [{
+		title: "Open info",
+		async action() {
+			console.log('fired action');
+			await handleClickEvent();
+		}
+	}];
+
 	const getInfoCommand = 'gitBlameInfo.expandInfo';
 	context.subscriptions.push(vscode.commands.registerCommand(getInfoCommand, async () => {
-		await vscode.window.showInformationMessage(`Line: ${getCurrentLine()}`);
+		(await infoMessage(`Summary: ${summary}`, actionItem))?.action();
 	}));
 	
 	gitStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);
@@ -40,7 +68,22 @@ function getCurrentLine(): number {
 	return result;
 }
 
-async function getGitInfo() {
+async function handleClickEvent(): Promise<void> {
+	if(vscode.window.activeTextEditor){
+		let currentlyOpenTabfilePath = vscode.window.activeTextEditor.document.fileName;
+		const currentlyOpenTabfileName = path.basename(currentlyOpenTabfilePath);
+		currentlyOpenTabfilePath = currentlyOpenTabfilePath.replace(currentlyOpenTabfileName, '');
+
+		if(await gitCommands.isGitRepo(currentlyOpenTabfilePath) && await gitCommands.isFileTracked(currentlyOpenTabfilePath, currentlyOpenTabfileName)){
+			const branchURL = await gitCommands.getURL(currentlyOpenTabfilePath);
+	
+			await vscode.env.openExternal(vscode.Uri.parse(urlParser.getCommitLink(hash, branchURL)));
+		}
+
+	}
+}
+
+async function getGitInfo(): Promise<void> {
 
 	updateStatusBarItem('$(sync~spin)Loading...');
 	if(vscode.window.activeTextEditor){
@@ -52,14 +95,19 @@ async function getGitInfo() {
 		if(await gitCommands.isGitRepo(currentlyOpenTabfilePath)) {
 			if(await gitCommands.isFileTracked(currentlyOpenTabfilePath, currentlyOpenTabfileName)){
 				const gitBlameInfo = await gitCommands.getBlame(currentlyOpenTabfilePath, currentlyOpenTabfileName, getCurrentLine());
-				const gitBranchInfo = await gitCommands.getBranch(currentlyOpenTabfilePath);
-				const gitURLInfo = await gitCommands.getURL(currentlyOpenTabfilePath);
-				const commitURL = urlParser.getCommitLink(gitBlameInfo.hash, gitURLInfo);
-			
-				console.log(gitBlameInfo);
-				console.log(gitBranchInfo);
-				console.log(gitURLInfo);
-				console.log(commitURL);
+
+				//Ugly but makes configuring for users easier
+				hash = gitBlameInfo.hash;
+				author = gitBlameInfo.author;
+				committer = gitBlameInfo.committer;
+				mail = gitBlameInfo.mail;
+				timestamp = gitBlameInfo.timestamp;
+				tz = gitBlameInfo.tz;
+				date = gitBlameInfo.date;
+				summary = gitBlameInfo.summary;
+				timeAgo = gitBlameInfo.timeAgo;
+
+				updateStatusBarItem(`$(git-commit)From: ${committer} (${timeAgo})`);
 			}
 			else {
 				Logger.write('Warning', 'File is ignored by .gitignore');
