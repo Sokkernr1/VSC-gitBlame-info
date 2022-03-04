@@ -1,4 +1,4 @@
-//This script is by "waderyan"
+//This script is by "waderyan" https://github.com/waderyan
 
 import { env } from "vscode";
 
@@ -16,6 +16,7 @@ const timeUnits: [Intl.RelativeTimeFormatUnit, number][] = [
 	["hour", HOUR],
 	["minute", MINUTE],
 ];
+
 export const between = (now: Date, compare: Date): string => {
 	const diffMilliseconds = now.valueOf() - compare.valueOf();
 
@@ -25,6 +26,5 @@ export const between = (now: Date, compare: Date): string => {
 				.format(-1 * Math.round(diffMilliseconds / scale), currentUnit);
 		}
 	}
-
 	return "right now";
-}
+};

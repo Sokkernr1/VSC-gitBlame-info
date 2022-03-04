@@ -1,7 +1,7 @@
 {
-  "name": "innovs-gitinfo",
-  "displayName": "innoVS-gitInfo",
-  "description": "A VSCode extension for innoGames employees for getting information from git",
+  "name": "vsc-gitblame-info",
+  "displayName": "gitBlame info",
+  "description": "A VSCode extension for getting information from git regardless of what service is being used",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.64.0"
@@ -9,9 +9,26 @@
   "categories": [
     "Other"
   ],
+  "galleryBanner": {
+    "color": "#f0efe7",
+    "theme": "light"
+  },
+  "icon": "src/images/git_icon.png",
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
+  "keywords": [
+    "git",
+    "gitblame",
+    "blame",
+    "github",
+    "gitlab",
+    "bitbucket"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sokkernr1/VSC-gitBlame-info"
+  },
   "main": "./dist/extension.js",
   "scripts": {
     "vscode:prepublish": "npm run package",
