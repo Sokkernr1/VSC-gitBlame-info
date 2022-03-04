@@ -2,33 +2,29 @@ import path = require('path');
 import * as vscode from 'vscode';
 import * as gitCommands from './util/gitCommands';
 import * as urlParser from './util/parseURL';
+import { Logger } from './util/logger';
 
 let gitStatusBarItem: vscode.StatusBarItem;
 
 export async function activate(context: vscode.ExtensionContext) {
 	
-	console.log('innoVS-gitInfo is now active');
+	Logger.write('info', 'innoVS-gitInfo is now active');
 
-	await getGitInfo();
-
-	const getInfoCommand = 'gitBlameInfo.giveLineInfo';
+	const getInfoCommand = 'gitBlameInfo.expandInfo';
 	context.subscriptions.push(vscode.commands.registerCommand(getInfoCommand, async () => {
 		await vscode.window.showInformationMessage(`Line: ${getCurrentLine()}`);
 	}));
-
-	gitStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
-	gitStatusBarItem.command = getInfoCommand;
-	gitStatusBarItem.text = '$(git-commit)$(sync~spin)hello';
-	context.subscriptions.push(gitStatusBarItem);
 	
+	gitStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);
+	gitStatusBarItem.command = getInfoCommand;
+	context.subscriptions.push(gitStatusBarItem);
+
 	context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(getGitInfo));
 	context.subscriptions.push(vscode.window.onDidChangeTextEditorSelection(getGitInfo));
 
 	gitStatusBarItem.show();
 
-	if (vscode.window.activeTextEditor) {
-		vscode.window.activeTextEditor.selection.active.line;
-	}
+	await getGitInfo();
 }
 
 function getCurrentLine(): number {
@@ -46,6 +42,7 @@ function getCurrentLine(): number {
 
 async function getGitInfo() {
 
+	updateStatusBarItem('$(sync~spin)Loading...');
 	if(vscode.window.activeTextEditor){
 		let currentlyOpenTabfilePath = vscode.window.activeTextEditor.document.fileName;
 		const currentlyOpenTabfileName = path.basename(currentlyOpenTabfilePath);
@@ -54,7 +51,7 @@ async function getGitInfo() {
 
 		if(await gitCommands.isGitRepo(currentlyOpenTabfilePath)) {
 			if(await gitCommands.isFileTracked(currentlyOpenTabfilePath, currentlyOpenTabfileName)){
-				const gitBlameInfo = await gitCommands.getBlame(currentlyOpenTabfilePath, currentlyOpenTabfileName, 10);
+				const gitBlameInfo = await gitCommands.getBlame(currentlyOpenTabfilePath, currentlyOpenTabfileName, getCurrentLine());
 				const gitBranchInfo = await gitCommands.getBranch(currentlyOpenTabfilePath);
 				const gitURLInfo = await gitCommands.getURL(currentlyOpenTabfilePath);
 				const commitURL = urlParser.getCommitLink(gitBlameInfo.hash, gitURLInfo);
@@ -65,18 +62,21 @@ async function getGitInfo() {
 				console.log(commitURL);
 			}
 			else {
-				console.log('File is ignored');
+				Logger.write('Warning', 'File is ignored by .gitignore');
+				updateStatusBarItem('$(git-commit)File is ignored');
 			}
 		}
 		else {
-			console.log('No git repo');
+			Logger.write('Warning', 'File is not part of a git repository');
+			updateStatusBarItem('$(git-commit)Git info');
 		}
 	} 
 	else {
-		console.log('No file opened');
+		Logger.write('Info', 'No file opened');
+		updateStatusBarItem('$(git-commit)Git info');
 	}
 }
 
-function updateStatusBarItem(): void {
-	gitStatusBarItem.show();
+function updateStatusBarItem(text: string): void {
+	gitStatusBarItem.text = text;
 }

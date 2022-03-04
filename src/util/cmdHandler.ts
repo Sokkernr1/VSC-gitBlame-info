@@ -1,4 +1,5 @@
 import * as cp from 'child_process';
+import { Logger } from './logger';
 
 export const cmd = (
 	command: string,
@@ -7,9 +8,10 @@ export const cmd = (
 	new Promise<string>((resolve, reject) => {
 		cp.exec(command, {...options, encoding: "utf8"}, (err, out) => {
 			if (err) {
-				console.log(err);
+				Logger.write('Error', String(err));
 				return reject(err);
 			}
+			Logger.write('Result', out);
 			return resolve(out);
 		});
 	});
