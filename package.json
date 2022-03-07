@@ -1,65 +1,123 @@
 {
-  "name": "vsc-gitblame-info",
-  "displayName": "gitBlame info",
-  "description": "A VSCode extension for getting information from git",
-  "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.64.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "galleryBanner": {
-    "color": "#f0efe7",
-    "theme": "light"
-  },
-  "icon": "src/images/git_icon.png",
-  "activationEvents": [
-    "onStartupFinished"
-  ],
-  "keywords": [
-    "git",
-    "github",
-    "gitblame",
-	"gitinfo",
-    "blame",
-    "bitbucket",
-    "gitlab"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Sokkernr1/VSC-gitBlame-info"
-  },
-  "homepage": "https://github.com/Sokkernr1/VSC-gitBlame-info/blob/master/README.md",
-  "bugs": {
-    "url": "https://github.com/Sokkernr1/VSC-gitBlame-info/issues"
-  },
-  "main": "./dist/extension.js",
-  "scripts": {
-    "vscode:prepublish": "npm run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
-    "compile-tests": "tsc -p . --outDir out",
-    "watch-tests": "tsc -p . -w --outDir out",
-    "pretest": "npm run compile-tests && npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
-  },
-  "devDependencies": {
-    "@types/glob": "^7.2.0",
-    "@types/mocha": "^9.1.0",
-    "@types/node": "^14.18.12",
-    "@types/vscode": "^1.64.0",
-    "@typescript-eslint/eslint-plugin": "^5.12.1",
-    "@typescript-eslint/parser": "^5.12.1",
-    "@vscode/test-electron": "^2.1.2",
-    "eslint": "^8.9.0",
-    "glob": "^7.2.0",
-    "mocha": "^9.2.1",
-    "ts-loader": "^9.2.6",
-    "typescript": "^4.5.5",
-    "webpack": "^5.69.1",
-    "webpack-cli": "^4.9.2"
-  }
+	"name": "vsc-gitblame-info",
+	"displayName": "gitBlame info",
+	"description": "A VSCode extension for getting information from git",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.64.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"galleryBanner": {
+		"color": "#f0efe7",
+		"theme": "light"
+	},
+	"icon": "src/images/git_icon.png",
+	"activationEvents": [
+		"onStartupFinished"
+	],
+	"keywords": [
+		"git",
+		"github",
+		"gitblame",
+		"gitinfo",
+		"blame",
+		"bitbucket",
+		"gitlab"
+	],
+	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "Git Blame info",
+			"properties": {
+				"gitBlameInfo.statusBarMessageDisplayLeft": {
+					"type": "boolean",
+					"default": true,
+					"description": "Display status bar message to the left"
+				},
+				"gitBlameInfo.statusBarPositionPriority": {
+					"type": "number",
+					"default": 0,
+					"description": "Priority where the status bar view should be placed"
+				},
+				"gitBlameInfo.infoMessageFormat": {
+					"type": "string",
+					"default": "$(git-commit)Summary: ${gitInfo.summary}",
+					"description": "Customize the info message"
+				},
+				"gitBlameInfo.statusBarMessageFormat": {
+					"type": "string",
+					"default": "$(git-commit)From: ${gitInfo.committer} (${gitInfo.timeAgo})",
+					"description": "Customize the standard status bar message"
+				},
+				"gitBlameInfo.statusBarMessageNoFileOpened": {
+					"type": "string",
+					"default": "$(git-commit)Git info",
+					"description": "Customize the standard status bar message for when no file is opened"
+				},
+				"gitBlameInfo.statusBarMessageNoRepo": {
+					"type": "string",
+					"default": "$(git-commit)Git info",
+					"description": "Customize the status bar message for when no repository was found"
+				},
+				"gitBlameInfo.statusBarMessageIgnoredFile": {
+					"type": "string",
+					"default": "$(git-commit)File is ignored",
+					"description": "Customize the status bar message for when the current file is being ignored"
+				},
+				"gitBlameInfo.statusBarMessageNoCommit": {
+					"type": "string",
+					"default": "$(git-commit)Not Committed Yet",
+					"description": "Customize the status bar message for when the changes are not yet committed"
+				},
+				"gitBlameInfo.statusBarMessageNoInfoFound": {
+					"type": "string",
+					"default": "$(git-commit)No info found",
+					"description": "Customize the status bar message for when no git info was found"
+				},
+				"gitBlameInfo.statusBarMessageLoading": {
+					"type": "string",
+					"default": "$(sync~spin)Loading...",
+					"description": "Customize the status bar message for when the extension is loading"
+				}
+			}
+		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Sokkernr1/VSC-gitBlame-info"
+	},
+	"homepage": "https://github.com/Sokkernr1/VSC-gitBlame-info/blob/master/README.md",
+	"bugs": {
+		"url": "https://github.com/Sokkernr1/VSC-gitBlame-info/issues"
+	},
+	"main": "./dist/extension.js",
+	"scripts": {
+		"vscode:prepublish": "npm run package",
+		"compile": "webpack",
+		"watch": "webpack --watch",
+		"package": "webpack --mode production --devtool hidden-source-map",
+		"compile-tests": "tsc -p . --outDir out",
+		"watch-tests": "tsc -p . -w --outDir out",
+		"pretest": "npm run compile-tests && npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.2.0",
+		"@types/mocha": "^9.1.0",
+		"@types/node": "^14.18.12",
+		"@types/vscode": "^1.64.0",
+		"@typescript-eslint/eslint-plugin": "^5.12.1",
+		"@typescript-eslint/parser": "^5.12.1",
+		"@vscode/test-electron": "^2.1.2",
+		"eslint": "^8.9.0",
+		"glob": "^7.2.0",
+		"mocha": "^9.2.1",
+		"ts-loader": "^9.2.6",
+		"typescript": "^4.5.5",
+		"webpack": "^5.69.1",
+		"webpack-cli": "^4.9.2"
+	}
 }

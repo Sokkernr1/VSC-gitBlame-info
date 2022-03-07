@@ -1,11 +1,11 @@
-import { getBlameObject, gitBlameTemplate } from './streamParser';
+import { getBlameObject, gitBlameTemplate, gitBlameBlank } from './streamParser';
 import { cmd } from './cmdHandler';
 import { Logger } from './logger';
 
 export async function getBlame(path: string, fileName: string, line: number): Promise<gitBlameTemplate> {
 	Logger.write('Command', `git blame -L ${line},${line} ${fileName} --incremental`);
 	const cmdResult = await cmd(`git blame -L ${line},${line} ${fileName} --incremental`, {cwd: path});
-	return getBlameObject(cmdResult);
+	return cmdResult !== 'Null' ? getBlameObject(cmdResult) : gitBlameBlank();
 }
 
 export async function getBranch(path: string): Promise<string>{

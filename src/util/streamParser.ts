@@ -12,7 +12,7 @@ export type gitBlameTemplate = {
 	timeAgo: string
 }
 
-const gitBlameBlank = (): gitBlameTemplate => ({
+export const gitBlameBlank = (): gitBlameTemplate => ({
 	hash: '',
 	author: '',
 	committer: '',
