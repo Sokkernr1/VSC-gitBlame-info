@@ -1,6 +1,6 @@
 {
-	"name": "vsc-gitblame-info",
-	"displayName": "gitBlame info",
+	"name": "vsc-git-info",
+	"displayName": "Git info",
 	"description": "A VSCode extension for getting information from git",
 	"version": "0.0.1",
 	"engines": {
@@ -29,54 +29,54 @@
 	"contributes": {
 		"configuration": {
 			"type": "object",
-			"title": "Git Blame info",
+			"title": "Git info",
 			"properties": {
-				"gitBlameInfo.statusBarMessageDisplayLeft": {
+				"gitInfo.statusBarMessageDisplayLeft": {
 					"type": "boolean",
 					"default": true,
 					"description": "Display status bar message to the left"
 				},
-				"gitBlameInfo.statusBarPositionPriority": {
+				"gitInfo.statusBarPositionPriority": {
 					"type": "number",
 					"default": 0,
 					"description": "Priority where the status bar view should be placed"
 				},
-				"gitBlameInfo.infoMessageFormat": {
+				"gitInfo.infoMessageFormat": {
 					"type": "string",
 					"default": "$(git-commit)Summary: ${gitInfo.summary}",
 					"description": "Customize the info message"
 				},
-				"gitBlameInfo.statusBarMessageFormat": {
+				"gitInfo.statusBarMessageFormat": {
 					"type": "string",
 					"default": "$(git-commit)From: ${gitInfo.committer} (${gitInfo.timeAgo})",
 					"description": "Customize the standard status bar message"
 				},
-				"gitBlameInfo.statusBarMessageNoFileOpened": {
+				"gitInfo.statusBarMessageNoFileOpened": {
 					"type": "string",
 					"default": "$(git-commit)Git info",
 					"description": "Customize the standard status bar message for when no file is opened"
 				},
-				"gitBlameInfo.statusBarMessageNoRepo": {
+				"gitInfo.statusBarMessageNoRepo": {
 					"type": "string",
 					"default": "$(git-commit)Git info",
 					"description": "Customize the status bar message for when no repository was found"
 				},
-				"gitBlameInfo.statusBarMessageIgnoredFile": {
+				"gitInfo.statusBarMessageIgnoredFile": {
 					"type": "string",
 					"default": "$(git-commit)File is ignored",
 					"description": "Customize the status bar message for when the current file is being ignored"
 				},
-				"gitBlameInfo.statusBarMessageNoCommit": {
+				"gitInfo.statusBarMessageNoCommit": {
 					"type": "string",
 					"default": "$(git-commit)Not Committed Yet",
 					"description": "Customize the status bar message for when the changes are not yet committed"
 				},
-				"gitBlameInfo.statusBarMessageNoInfoFound": {
+				"gitInfo.statusBarMessageNoInfoFound": {
 					"type": "string",
 					"default": "$(git-commit)No info found",
 					"description": "Customize the status bar message for when no git info was found"
 				},
-				"gitBlameInfo.statusBarMessageLoading": {
+				"gitInfo.statusBarMessageLoading": {
 					"type": "string",
 					"default": "$(sync~spin)Loading...",
 					"description": "Customize the status bar message for when the extension is loading"
@@ -96,13 +96,9 @@
 	"scripts": {
 		"vscode:prepublish": "npm run package",
 		"compile": "webpack",
-		"watch": "webpack --watch",
+		"compile:watch": "webpack --watch",
 		"package": "webpack --mode production --devtool hidden-source-map",
-		"compile-tests": "tsc -p . --outDir out",
-		"watch-tests": "tsc -p . -w --outDir out",
-		"pretest": "npm run compile-tests && npm run compile && npm run lint",
-		"lint": "eslint src --ext ts",
-		"test": "node ./out/test/runTest.js"
+		"lint": "eslint src --ext ts"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.2.0",

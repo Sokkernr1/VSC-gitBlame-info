@@ -25,7 +25,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	
 	Logger.write('info', 'innoVS-gitInfo is now active');
 
-	const getInfoCommand = 'gitBlameInfo.expandInfo';
+	const getInfoCommand = 'gitInfo.expandInfo';
 	context.subscriptions.push(vscode.commands.registerCommand(getInfoCommand, async () => {
 		await handleInfoEvent();
 	}));

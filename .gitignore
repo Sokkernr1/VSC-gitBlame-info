@@ -8,3 +8,5 @@ node_modules
 !.vscode/settings.json
 !.vscode/tasks.json
 package-lock.json
+*.txt
+.editorconfig

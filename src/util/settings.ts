@@ -17,4 +17,4 @@ export type PropertiesMap = {
 // take any possible default values into consideration.
 export const getProperty = <Key extends keyof PropertiesMap>(
 	name: Key,
-): PropertiesMap[Key] => workspace.getConfiguration("gitBlameInfo").get(name) as PropertiesMap[Key];
+): PropertiesMap[Key] => workspace.getConfiguration("gitInfo").get(name) as PropertiesMap[Key];
