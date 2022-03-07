@@ -8,6 +8,8 @@ import { getProperty } from './util/settings';
 
 let gitStatusBarItem: vscode.StatusBarItem;
 
+let isValid = false;
+
 let gitInfo: gitBlameTemplate;
 
 const infoMessage = <T extends vscode.MessageItem>(
@@ -74,7 +76,7 @@ async function handleInfoEvent(): Promise<void> {
 		const currentlyOpenTabfileName = path.basename(currentlyOpenTabfilePath);
 		currentlyOpenTabfilePath = currentlyOpenTabfilePath.replace(currentlyOpenTabfileName, '');
 
-		if(await gitCommands.isGitRepo(currentlyOpenTabfilePath) && await gitCommands.isFileTracked(currentlyOpenTabfilePath, currentlyOpenTabfileName) && gitInfo.committer !== 'Not Committed Yet' && gitInfo.committer !== 'No info found'){
+		if(isValid){
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 			(await infoMessage(eval('`' + getProperty('infoMessageFormat') + '`'), actionItem))?.action();
 		}
@@ -97,46 +99,54 @@ async function getGitInfo(): Promise<void> {
 				
 				//Ugly but makes configuring for users easier
 				if(gitInfo.committer === 'Not Committed Yet') {
+					isValid = false;
 					gitInfo.hash = 'Not Committed Yet';
 					gitInfo.author = 'Not Committed Yet';
 					gitInfo.committer = 'Not Committed Yet';
 					gitInfo.mail = 'Not Committed Yet';
 					gitInfo.timestamp = 'Not Committed Yet';
 					gitInfo.tz = 'Not Committed Yet';
-					gitInfo.date = new Date('01/02/2001');
+					gitInfo.date = new Date();
 					gitInfo.summary = 'Not Committed Yet';
 					gitInfo.timeAgo = 'Not Committed Yet';
-					updateStatusBarItem(`$(git-commit)Not Committed Yet`);
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+					updateStatusBarItem(eval('`' + getProperty('statusBarMessageNoCommit') + '`'));
 				} else if(gitInfo.committer === ''){
+					isValid = false;
 					gitInfo.hash = 'No info found';
 					gitInfo.author = 'No info found';
 					gitInfo.committer = 'No info found';
 					gitInfo.mail = 'No info found';
 					gitInfo.timestamp = 'No info found';
 					gitInfo.tz = 'No info found';
-					gitInfo.date = new Date('01/02/2001');
+					gitInfo.date = new Date();
 					gitInfo.summary = 'No info found';
 					gitInfo.timeAgo = 'No info found';
-					updateStatusBarItem(`$(git-commit)No info found`);
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+					updateStatusBarItem(eval('`' + getProperty('statusBarMessageNoInfoFound') + '`'));
 				} else {
+					isValid = true;
 					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 					updateStatusBarItem(eval('`' + getProperty('statusBarMessageFormat') + '`'));
 				}
 			}
 			else {
 				Logger.write('Warning', 'File is ignored by .gitignore');
+				isValid = false;
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 				updateStatusBarItem(eval('`' + getProperty('statusBarMessageIgnoredFile') + '`'));
 			}
 		}
 		else {
 			Logger.write('Warning', 'File is not part of a git repository');
+			isValid = false;
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 			updateStatusBarItem(eval('`' + getProperty('statusBarMessageNoRepo') + '`'));
 		}
 	} 
 	else {
 		Logger.write('Info', 'No file opened');
+		isValid = false;
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 		updateStatusBarItem(eval('`' + getProperty('statusBarMessageNoFileOpened') + '`'));
 	}

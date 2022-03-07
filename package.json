@@ -43,7 +43,7 @@
 				},
 				"gitInfo.infoMessageFormat": {
 					"type": "string",
-					"default": "$(git-commit)Summary: ${gitInfo.summary}",
+					"default": "Summary: ${gitInfo.summary}",
 					"description": "Customize the info message"
 				},
 				"gitInfo.statusBarMessageFormat": {
