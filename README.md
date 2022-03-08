@@ -1,70 +1,153 @@
-# innovs-gitinfo README
+# Git Info
 
-This is the README for your extension "innovs-gitinfo". After writing up a brief description, we recommend including the following sections.
+View the Git Blame information for your current line.<br>
+Also links the commit to be opened and viewed in your browser.
 
-## Features
+![Feature Usage]()
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+# Install
 
-For example if there is an image subfolder under your extension project workspace:
+1. Open _Visual Studio Code_
+1. Go to extensions
+1. Search for `git info`
+1. Click install on _Git info_
 
-\!\[feature X\]\(images/feature-x.png\)
+# Configuration
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Type</th>
+      <th>Default Value</th>
+    </tr>
+    <tr>
+      <th colspan="3">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>gitInfo.statusBarMessageDisplayLeft</code></td>
+      <td><code>Boolean</code></td>
+      <td><code>true</code></td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <ul>
+          <li>Should the info bar be displayed on the left or right</li>
+      </ul>
+    </tr>
+    <tr>
+      <td><code>gitInfo.statusBarPositionPriority</code></td>
+      <td><code>Integer</code></td>
+      <td><code>0</code></td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <ul>
+          <li>Priority of the info bars position. Higher values put it further to the left/right.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><code>gitInfo.infoMessageFormat</code></td>
+      <td><code>String</code></td>
+      <td><code>Summary: ${gitInfo.summary}</code></td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <ul>
+          <li>The message that is displayed in the info pop-up</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><code>gitInfo.statusBarMessageFormat</code></td>
+      <td><code>String</code></td>
+      <td><code>$(git-commit)From: ${gitInfo.committer} (${gitInfo.timeAgo})</code></td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <li>The message that is displayed in the info bar</li>
+      </td>
+    </tr>
+    <tr>
+      <td><code>gitInfo.statusBarMessageNoFileOpened</code></td>
+      <td><code>String</code></td>
+      <td><code>$(git-commit)Git info</code></td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <li>The message that is displayed in the info bar when no file is opened</li>
+    </tr>
+    <tr>
+      <td><code>gitInfo.statusBarMessageNoRepo</code></td>
+      <td><code>String</code></td>
+      <td><code>$(git-commit)Git info</code></td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <li>The messaage that is displayed in the info bar when the opened file is not part of any repo</li>
+      </td>
+    </tr>
+    <tr>
+      <td><code>gitInfo.statusBarMessageIgnoredFile</code></td>
+      <td><code>String</code></td>
+      <td><code>$(git-commit)File is ignored</code></td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <li>The message that is displayed in the info bar when the opened file is being ignored by the .gitignore</li>
+      </td>
+    </tr>
+    <tr>
+      <td><code>gitInfo.statusBarMessageNoCommit</code></td>
+      <td><code>String</code></td>
+      <td><code>$(git-commit)Not Committed Yet</code></td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <li>The message that is displayed in the info bar when the current line has changes that are not yet committed</li>
+      </td>
+    </tr>
+	 <tr>
+      <td><code>gitInfo.statusBarMessageNoInfoFound</code></td>
+      <td><code>String</code></td>
+      <td><code>$(git-commit)No info found</code></td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <li>The message that is displayed in the info bar when the extension couldnt find any git entries for the selected line</li>
+      </td>
+    </tr>
+	 <tr>
+      <td><code>gitInfo.statusBarMessageLoading</code></td>
+      <td><code>String</code></td>
+      <td><code>$(sync~spin)Loading...</code></td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <li>The message that is displayed in the info bar when the extension is loading</li>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-## Requirements
+## Message Tokens (available globally for all settings)
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+| Token | Description |
+|-------|-------------|
+| `${gitInfo.hash}` | 40-bit hash unique to the commit |
+| `${gitInfo.author}` | Name of the Author |
+| `${gitInfo.committer}` | Name of the Committer |
+| `${gitInfo.mail}` | E-Mail address of the committer |
+| `${gitInfo.timestamp}` | Timestamp of when the commit was made |
+| `${gitInfo.tz}` | Timezone of the committer |
+| `${gitInfo.date}` | Date of the creation of the commit |
+| `${gitInfo.summary}` | Summary of the commit |
+| `${gitInfo.timeAgo}` | How long ago the commit was made |
 
-## Extension Settings
+# Acknowledgements
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+* Logo by [Jason Long](https://twitter.com/jasonlong).
+* Influenced and inspired by [Wade Anderson](https://github.com/waderyan).
