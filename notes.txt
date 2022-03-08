@@ -1,0 +1,53 @@
+Target URL's:
+    https://bitbucket.innogames.de/projects/conv/repos/onelps-fe/commits/56fce2f0a042e14e819cc19842d7cf667f7bcc6d
+    https://bitbucket.innogames.de/projects/COREBE/repos/core-backend-account/commits/c25a9efde5ccdb79a2bd130c8b9d16e4738b9691
+    https://github.com/Sokkernr1/vscode-gitblame/commit/8588c60b55de9286cc2498390f250c7677b63691
+
+Possible way:
+    {2.replace(/.*(?=@)./i, "https://")} + 
+    {2.replace(/(?<=git.+):/i, "/")} + 
+    {2.replace(/(?<=innogames.de|innogames.com)\//i, "/projects/")}} +
+    {2.replace(/(?<=bitbucket.+)\/((?!.+\/))/i, "/repos/")}} +
+    {2.replace(/\.git/i, "")}} +
+    if(/bitbucket/i = exists) 
+        "/commits/" 
+    else
+        "/commit/" +
+    {3.commitHash}
+
+Clean Hash line:
+	Hash line: bd1d5b0c23f07833381c69e9815e74a1908ae37a 11 10 1
+	regex: /.(?<=\s).*/i
+
+Check if file is ignored:
+	git check-ignore <filename> &>/dev/null; echo $?
+		if output != empty then file is tracked
+
+Check if path is part of a git repository:
+	git -C . rev-parse 2>/dev/null; echo $?
+		if output != 0 then its no repository
+
+{1}Get current branch: 
+    git symbolic-ref -q HEAD --short
+        feature/CONV-9604-forge-ingame-speechbubble
+    
+{2}Get repository URL:
+    git ls-remote --get-url
+        ssh://git@bitbucket.innogames.de/conv/onelps-fe.git
+        https://bitbucket.innogames.de/scm/corebe/core-backend-push-notification.git
+        git@github.com:Sokkernr1/vscode-gitblame.git
+
+{3}Get last commit on line x: 
+    git blame -L 10,10 extension.ts --incremental
+        2ae0ce56619f48e1ab1a8539c705766253e68c2d 10 10 1
+		author Paul Sohns
+		author-mail <paul.sohns@innogames.com>
+		author-time 1645840243
+		author-tz +0100
+		committer Paul Sohns
+		committer-mail <paul.sohns@innogames.com>
+		committer-time 1645840243
+		committer-tz +0100
+		summary First extract from output
+		previous bd1d5b0c23f07833381c69e9815e74a1908ae37a src/extension.ts
+		filename src/extension.ts
