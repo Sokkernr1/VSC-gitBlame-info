@@ -3,8 +3,6 @@
 View the Git Blame information for your current line.<br>
 Also links the commit to be opened and viewed in your browser.
 
-![Feature Usage]()
-
 # Install
 
 1. Open _Visual Studio Code_
