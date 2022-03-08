@@ -3,6 +3,8 @@
 	"displayName": "Git info",
 	"description": "A VSCode extension for getting information from git",
 	"version": "0.0.1",
+	"publisher": "Sokkero",
+	"license": "MIT",
 	"engines": {
 		"vscode": "^1.64.0"
 	},
@@ -13,7 +15,7 @@
 		"color": "#f0efe7",
 		"theme": "light"
 	},
-	"icon": "src/images/git_icon.png",
+	"icon": "git_icon.png",
 	"activationEvents": [
 		"onStartupFinished"
 	],
