@@ -1,10 +1,12 @@
 import { workspace } from "vscode";
 
 export type PropertiesMap = {
+	"copyLinkInsteadOfOpening": boolean;
     "statusBarMessageDisplayLeft": boolean;
 	"statusBarMessageFormat": string;
     "statusBarPositionPriority": number | undefined;
     "infoMessageFormat": string;
+	"infoMessageCopied": string;
     "statusBarMessageNoRepo": string;
 	"statusBarMessageIgnoredFile": string;
 	"statusBarMessageNoCommit": string;

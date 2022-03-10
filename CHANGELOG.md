@@ -1,9 +1,8 @@
-# Change Log
+## 1.1.o (March 09, 2022)
 
-All notable changes to the "innovs-gitinfo" extension will be documented in this file.
+* Add setting to toggle link copying
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [Unreleased]
+## 1.0.0 (March 07, 2022)
 
-- Initial release
+* Oficial release

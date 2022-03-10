@@ -24,6 +24,18 @@ Also links the commit to be opened and viewed in your browser.
     </tr>
   </thead>
   <tbody>
+  	<tr>
+      <td><code>gitInfo.copyLinkInsteadOfOpening</code></td>
+      <td><code>Boolean</code></td>
+      <td><code>false</code></td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <ul>
+          <li>Toggles wether the link to the commit page should be copied to the clipboard instead of opened instantly</li>
+      </ul>
+    </tr>
+    <tr>
     <tr>
       <td><code>gitInfo.statusBarMessageDisplayLeft</code></td>
       <td><code>Boolean</code></td>
@@ -56,6 +68,19 @@ Also links the commit to be opened and viewed in your browser.
       <td colspan="3">
         <ul>
           <li>The message that is displayed in the info pop-up</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+	<tr>
+      <td><code>gitInfo.infoMessageCopied</code></td>
+      <td><code>String</code></td>
+      <td><code>Link copied to clipboard!</code></td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <ul>
+          <li>The message that is displayed when the link to the commit was copied</li>
         </ul>
       </td>
     </tr>
