@@ -66,7 +66,13 @@ async function handleInfoEvent(): Promise<void> {
 				const currentlyOpenTabfileName = path.basename(currentlyOpenTabfilePath);
 				currentlyOpenTabfilePath = currentlyOpenTabfilePath.replace(currentlyOpenTabfileName, '');
 				const branchURL = await gitCommands.getURL(currentlyOpenTabfilePath);
-				await vscode.env.openExternal(vscode.Uri.parse(urlParser.getCommitLink(gitInfo.hash, branchURL)));
+				if(!getProperty('copyLinkInsteadOfOpening')){
+					await vscode.env.openExternal(vscode.Uri.parse(urlParser.getCommitLink(gitInfo.hash, branchURL)));
+				} 
+				else {
+					await vscode.env.clipboard.writeText(urlParser.getCommitLink(gitInfo.hash, branchURL));
+					await infoMessage(getProperty('infoMessageCopied'));
+				}
 			}
 		}
 	}];
