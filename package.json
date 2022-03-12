@@ -33,6 +33,11 @@
 			"type": "object",
 			"title": "Git info",
 			"properties": {
+				"gitInfo.setCommitURL": {
+					"type": "string",
+					"default": "",
+					"description": "Definde the URL of the commit yourself. Leave this empty and the extension will try its best to create it by itself.<br>You can use all Tokens that are defined in the README.md"
+				},
 				"gitInfo.copyLinkInsteadOfOpening": {
 					"type": "boolean",
 					"default": false,
