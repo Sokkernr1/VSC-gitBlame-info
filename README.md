@@ -24,6 +24,17 @@ Also links the commit to be opened and viewed in your browser.
     </tr>
   </thead>
   <tbody>
+	<tr>
+      <td><code>gitInfo.setCommitURL</code></td>
+      <td><code>String</code></td>
+      <td><code>""</code></td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <ul>
+          <li>Allows the user to set the commit URL that is opened. If this is left empty the extension will try to build the URL based on all of the information available</li>
+      </ul>
+    </tr>
   	<tr>
       <td><code>gitInfo.copyLinkInsteadOfOpening</code></td>
       <td><code>Boolean</code></td>

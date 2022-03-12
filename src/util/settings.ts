@@ -1,6 +1,7 @@
 import { workspace } from "vscode";
 
 export type PropertiesMap = {
+	"setCommitURL": string;
 	"copyLinkInsteadOfOpening": boolean;
     "statusBarMessageDisplayLeft": boolean;
 	"statusBarMessageFormat": string;

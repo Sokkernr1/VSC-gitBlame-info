@@ -2,7 +2,7 @@
 	"name": "vsc-git-info",
 	"displayName": "Git info",
 	"description": "A VSCode extension for getting information from git about commits and changes",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"publisher": "Sokkero",
 	"license": "MIT",
 	"engines": {
@@ -33,6 +33,11 @@
 			"type": "object",
 			"title": "Git info",
 			"properties": {
+				"gitInfo.setCommitURL": {
+					"type": "string",
+					"default": "",
+					"description": "Definde the URL of the commit yourself. Leave this empty and the extension will try its best to create it by itself.<br>You can use all Tokens that are defined in the README.md"
+				},
 				"gitInfo.copyLinkInsteadOfOpening": {
 					"type": "boolean",
 					"default": false,
