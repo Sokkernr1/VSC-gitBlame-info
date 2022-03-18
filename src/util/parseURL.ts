@@ -3,6 +3,7 @@ export function getCommitLink(hash: string, repoURL: string): string{
 	urlString = urlString.replace(/(?<=git.+):/i, "/");
 	urlString = urlString.replace(/(?<=bitbucket.*?de)\//i, "/projects/");
 	urlString = urlString.replace(/(?<=bitbucket.+)\/((?!.+\/))/i, "/repos/");
+	urlString = urlString.replace(/\/scm\//i, "/");
 	urlString = urlString.replace(/\.git/i, "");
 
 	if(urlString.includes('bitbucket')){
